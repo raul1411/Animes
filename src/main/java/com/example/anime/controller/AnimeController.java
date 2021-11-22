@@ -20,12 +20,12 @@ public class AnimeController {
     public AnimeController(AnimeRepository animeRepository) { this.animeRepository = animeRepository; }
 
     @GetMapping("/")
-    public ResponseEntity<?> findAllAnimes(Authentication authentication) {
+    public ResponseEntity<?> findAllAnimes() {
         return ResponseEntity.ok().body(ListResult.list(animeRepository.findAll()));
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> getAnime(@RequestBody Anime anime, Authentication authentication) {
+    public ResponseEntity<?> getAnime(@RequestBody Anime anime) {
         return ResponseEntity.ok().body(animeRepository.save(anime));
     }
 }
