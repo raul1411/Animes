@@ -5,7 +5,7 @@ CREATE TABLE anime (
     type text,
     yearr int,
     image text
-)
+);
 
 INSERT INTO anime(name, description, type, yearr, image) VALUES
 ('One Piece', 'Random pirates', 'Shonen', 1998, '/images/123');
