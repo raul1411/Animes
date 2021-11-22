@@ -3,9 +3,9 @@ CREATE TABLE anime (
     name text,
     description text,
     type text,
-    year int,
+    yearr int,
     image text
 )
 
-INSERT INTO anime(name, description, type, year, image) VALUES
+INSERT INTO anime(name, description, type, yearr, image) VALUES
 ('One Piece', 'Random pirates', 'Shonen', 1998, '/images/123');

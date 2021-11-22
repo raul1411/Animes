@@ -24,7 +24,7 @@ public class AnimeController {
         return ResponseEntity.ok().body(ListResult.list(animeRepository.findAll()));
     }
 
-    @PostMapping("/")
+    @PostMapping("/{id}")
     public ResponseEntity<?> getAnime(@RequestBody Anime anime, Authentication authentication) {
         return ResponseEntity.ok().body(animeRepository.save(anime));
     }
