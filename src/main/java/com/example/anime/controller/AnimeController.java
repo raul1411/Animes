@@ -17,7 +17,7 @@ public class AnimeController {
     public AnimeController(AnimeRepository animeRepository) { this.animeRepository = animeRepository; }
 
     @GetMapping("/")
-    public List<Anime> findAllMovies(Authentication authentication) {
+    public List<Anime> findAllAnimes(Authentication authentication) {
         return animeRepository.findAll();
     }
 
