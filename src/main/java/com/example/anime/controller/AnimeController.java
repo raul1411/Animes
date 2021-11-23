@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -17,6 +18,11 @@ public class AnimeController {
     @Autowired
     private final AnimeRepository animeRepository;
     public AnimeController(AnimeRepository animeRepository) { this.animeRepository = animeRepository; }
+
+    @GetMapping("/")
+    public List<Anime> todos(){
+        return animeRepository.findAll();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findAllAnimes(@PathVariable UUID id) {
