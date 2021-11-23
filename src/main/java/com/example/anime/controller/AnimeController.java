@@ -24,16 +24,16 @@ public class AnimeController {
         return animeRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findAllAnimes(@PathVariable UUID id) {
-        Anime file = animeRepository.findById(id).orElse(null);
+//    @GetMapping("/{id}")
+//    public ResponseEntity<?> findAllAnimes(@PathVariable UUID id) {
+//        Anime file = animeRepository.findById(id).orElse(null);
+//
+//        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Error.message("No s'ha trobat l'anime amb ID: " + id));
+//        return ResponseEntity.ok().body(file);
+//    }
 
-        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Error.message("No s'ha trobat l'anime amb ID: " + id));
-        return ResponseEntity.ok().body(file);
-    }
-
-    @PostMapping("/")
-    public Anime getAnime(@RequestBody Anime anime) {
-        return animeRepository.save(anime);
-    }
+//    @PostMapping("/")
+//    public Anime getAnime(@RequestBody Anime anime) {
+//        return animeRepository.save(anime);
+//    }
 }
