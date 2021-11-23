@@ -8,5 +8,4 @@ public class Error {
         error.message =message;
         return error;
     }
-
 }

@@ -16,6 +16,4 @@ public class Anime {
     public int yearr;
     public String imageurl;
 
-
-
 }
