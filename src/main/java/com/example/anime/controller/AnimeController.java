@@ -15,6 +15,7 @@ import java.util.UUID;
 @RequestMapping("/anime")
 public class AnimeController {
 
+    @Autowired
     private final AnimeRepository animeRepository;
     public AnimeController(AnimeRepository animeRepository) { this.animeRepository = animeRepository; }
 
