@@ -1,4 +1,4 @@
-package com.example.anime.domain.dto;
+/*package com.example.anime.domain.dto;
 
 public class Error {
     public String message;
@@ -9,3 +9,4 @@ public class Error {
         return error;
     }
 }
+*/

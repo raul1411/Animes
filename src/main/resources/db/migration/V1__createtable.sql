@@ -1,5 +1,5 @@
 CREATE TABLE anime (
-    animeid uuid NOT NULL DEFAULT  gen_random_uuid() PRIMARY KEY,
+    animeid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     name text,
     description text,
     type text,
