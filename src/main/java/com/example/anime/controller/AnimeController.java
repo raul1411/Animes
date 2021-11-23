@@ -18,7 +18,7 @@ public class AnimeController {
     private final AnimeRepository animeRepository;
     public AnimeController(AnimeRepository animeRepository) { this.animeRepository = animeRepository; }
 
-    @GetMapping("/")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findAllAnimes(@PathVariable UUID id) {
         Anime file = animeRepository.findById(id).orElse(null);
 
@@ -26,8 +26,8 @@ public class AnimeController {
         return ResponseEntity.ok().body(file);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<?> getAnime(@RequestBody Anime anime) {
-        return ResponseEntity.ok().body(animeRepository.save(anime));
+    @PostMapping("/")
+    public Anime getAnime(@RequestBody Anime anime) {
+        return animeRepository.save(anime);
     }
 }
