@@ -4,8 +4,12 @@ CREATE TABLE anime (
     description text,
     type text,
     year int,
-    image text
-);
+    imageurl text);
 
-INSERT INTO anime(name, description, type, year, image) VALUES
+INSERT INTO anime(name, description, type, year, imageurl) VALUES
 ('One Piece', 'Random pirates', 'Shonen', 1998, '/images/123');
+
+CREATE TABLE file (
+    fileid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    contenttype text,
+    bytes bytea);

@@ -18,12 +18,11 @@ flyway {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'org.postgresql:postgresql'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.flywaydb:flyway-core:8.0.1'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.5.12'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.6'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.6'
+    runtimeOnly 'org.postgresql:postgresql:42.3.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.6'
+    implementation 'org.flywaydb:flyway-core:8.0.2'
 }
 
 test {
