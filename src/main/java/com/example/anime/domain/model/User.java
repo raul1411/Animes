@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
+@Table(name = "usser")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,4 +12,6 @@ public class User {
 
     public String username;
     public String password;
+    public String role;
+    public boolean enabled;
 }
