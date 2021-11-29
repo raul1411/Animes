@@ -58,13 +58,13 @@ public class FileController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFile(@PathVariable UUID id) {
-        File file = fileRepository.findById(id).orElse(null);
+        File f = fileRepository.findById(id).orElse(null);
 
-        if (file == null) {
+        if (f == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No s'ha trobat l'arxiu amd id " + id);
         }
         else {
-            fileRepository.delete(file);
+            fileRepository.delete(f);
             return ResponseEntity.ok().body("S'ha eliminat l'arxiu amd id " + id);
         }
     }
