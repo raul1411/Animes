@@ -13,3 +13,13 @@ CREATE TABLE file (
     fileid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     contenttype text,
     bytes bytea);
+
+CREATE TABLE doblador (
+    dobladorid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    name text,
+    imageurl text);
+
+CREATE TABLE animedoblador (
+    animeid uuid REFERENCES anime(animeid) ON DELETE CASCADE,
+    dobladorid uuid REFERENCES doblador(dobladorid) ON DELETE CASCADE,
+    PRIMARY KEY (animeid, dobladorid));

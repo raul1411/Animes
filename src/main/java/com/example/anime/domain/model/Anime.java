@@ -1,6 +1,7 @@
 package com.example.anime.domain.model;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,4 +17,7 @@ public class Anime {
     public int year;
     public String imageurl;
 
+    @ManyToMany
+    @JoinTable(name = "animedoblador", joinColumns = @JoinColumn(name = "animeid"), inverseJoinColumns = @JoinColumn(name = "dobladorid"))
+    Set<Doblador> dobladors;
 }
