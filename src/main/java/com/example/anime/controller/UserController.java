@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getALl(){
+    public ResponseEntity<?> getAll(){
         return ResponseEntity.ok().body(ResponseList.list(userRepository.findBy()));
     }
 
