@@ -37,7 +37,6 @@ public class UserController {
         return ResponseEntity.ok().body(ResponseList.list(userRepository.findBy()));
     }
 
-    // WEB REGISTER FORM (for testing)
     @GetMapping("/register/web")
     public String hack(){
         return "<div style='display:flex;flex-direction:column;width:20em;gap:0.5em'>" +

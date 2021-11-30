@@ -11,5 +11,4 @@ public class ResponseMessage {
     public static ResponseMessage message(String message) {
         return new ResponseMessage(message);
     }
-
 }

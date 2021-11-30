@@ -13,5 +13,4 @@ public class ResponseList {
     public static ResponseList list(List<?> result){
         return new ResponseList(result);
     }
-
 }
