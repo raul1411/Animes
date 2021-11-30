@@ -1,14 +1,14 @@
 package com.example.anime.controller;
 
-import com.example.anime.domain.model.Anime;
 import com.example.anime.domain.dto.Error;
+import com.example.anime.domain.dto.ResponseAnime;
+import com.example.anime.domain.model.Anime;
 import com.example.anime.repository.AnimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,8 +20,8 @@ public class AnimeController {
     public AnimeController(AnimeRepository animeRepository) { this.animeRepository = animeRepository; }
 
     @GetMapping("/")
-    public List<Anime> todos(){
-        return animeRepository.findAll();
+    public ResponseEntity<?> todos(){
+        return ResponseEntity.ok().body(new ResponseAnime(animeRepository.findAll()));
     }
 
     @GetMapping("/{id}")
