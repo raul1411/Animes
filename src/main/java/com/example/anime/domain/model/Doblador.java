@@ -1,7 +1,6 @@
 package com.example.anime.domain.model;
 
 import javax.persistence.*;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -14,8 +13,9 @@ public class Doblador {
         public String name;
         public String imageurl;
 
+        /*
         @ManyToMany(mappedBy = "dobladors")
         Set<Anime> animes;
-
+*/
 }
 

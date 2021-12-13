@@ -1,7 +1,7 @@
 package com.example.anime.controller;
 
 import com.example.anime.domain.dto.Error;
-import com.example.anime.domain.dto.ResponseAnime;
+import com.example.anime.domain.dto.ResponseList;
 import com.example.anime.domain.model.Anime;
 import com.example.anime.repository.AnimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,11 @@ public class AnimeController {
 
     @GetMapping("/")
     public ResponseEntity<?> todos(){
-        return ResponseEntity.ok().body(new ResponseAnime(animeRepository.findAll()));
+        return ResponseEntity.ok().body(new ResponseList(animeRepository.findAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findAllAnimes(@PathVariable UUID id) {
+    public ResponseEntity<?> findAnimesById(@PathVariable UUID id) {
         Anime file = animeRepository.findById(id).orElse(null);
 
         if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Error.message("No s'ha trobat l'anime amd id: " + id));
