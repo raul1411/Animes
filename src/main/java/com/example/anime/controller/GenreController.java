@@ -3,6 +3,7 @@ package com.example.anime.controller;
 import com.example.anime.domain.dto.Error;
 import com.example.anime.domain.dto.ResponseList;
 import com.example.anime.domain.model.Genre;
+import com.example.anime.domain.model.projection.ProjectionGenres;
 import com.example.anime.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,6 @@ public class GenreController {
         Genre file = genreRepository.findById(id).orElse(null);
 
         if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Error.message("No s'ha trobat l'genere amd id: " + id));
-        return ResponseEntity.ok().body(file);
+        return ResponseEntity.ok().body(genreRepository.findByGenreid(id, ProjectionGenres.class));
     }
 }
