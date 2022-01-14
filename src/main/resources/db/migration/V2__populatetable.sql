@@ -1,5 +1,5 @@
 INSERT INTO anime(name, description, type, year, imageurl) VALUES
-('One Piece', 'Random pirates', 'Shonen', 1998, '/images/123');
+    ('One Piece', 'Random pirates', 'Shonen', 1998, '/images/123');
 
 INSERT INTO author (name, imageurl) values
     ('Author 1', 'images/1'),
@@ -13,3 +13,6 @@ INSERT INTO genre(label, image) values
 
 INSERT INTO anime_genre values
     ((SELECT animeid FROM anime WHERE name='One Piece'), (SELECT genreid FROM genre WHERE label='Genre One'));
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+INSERT INTO usser (username, password) VALUES ('user', crypt('pass', gen_salt('bf')));

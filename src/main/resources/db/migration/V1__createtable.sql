@@ -41,3 +41,9 @@ CREATE TABLE anime_genre (
     genre_id uuid REFERENCES genre(genreid) ON DELETE CASCADE,
     PRIMARY KEY (anime_id, genre_id)
 );
+
+CREATE TABLE favorite (
+    userid uuid REFERENCES usser(userid) ON DELETE CASCADE,
+    animeid uuid REFERENCES anime(animeid) ON DELETE CASCADE,
+    PRIMARY KEY (userid, animeid));
+)
