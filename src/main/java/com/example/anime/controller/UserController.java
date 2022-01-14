@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @Autowired private BCryptPasswordEncoder passwordEncoder;
-    @Autowired private FavoriteRepository favoriteRepository;
+    @Autowired private FavoriteRepository favRepository;
 
     @PostMapping(path = "/register")
     public ResponseEntity<?> register(@RequestBody RequestUserRegister requestUserRegister) {
@@ -55,7 +55,7 @@ public class UserController {
                 Favorite favorite = new Favorite();
                 favorite.animeid = favoriteAnime.animeid;
                 favorite.userid = aUser.userid;
-                favoriteRepository.save(favorite);
+                favRepository.save(favorite);
                 return ResponseEntity.ok().build();
             }
         }
@@ -91,7 +91,7 @@ public class UserController {
                 Favorite favorite = new Favorite();
                 favorite.animeid = requestFavorite.animeid;
                 favorite.userid = aUser.userid;
-                favoriteRepository.delete(favorite);
+                favRepository.delete(favorite);
                 return ResponseEntity.ok().body("S'ha eliminat dels favorits l'anime amd id " + favorite.animeid);
             }
         }
