@@ -31,5 +31,6 @@ public class Anime {
 
     @ManyToMany
     @JoinTable(name = "favorite", joinColumns = @JoinColumn(name ="animeid"), inverseJoinColumns = @JoinColumn(name = "userid"))
+    @JsonIgnoreProperties({"password", "enabled", "favorites"})
     public Set<User> favoritedby;
 }

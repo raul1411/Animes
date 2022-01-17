@@ -3,6 +3,7 @@ package com.example.anime.controller;
 import com.example.anime.domain.dto.Error;
 import com.example.anime.domain.dto.ResponseList;
 import com.example.anime.domain.model.Anime;
+import com.example.anime.domain.model.projection.ProjectionAnimeIdNameImage;
 import com.example.anime.repository.AnimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class AnimeController {
 
     @GetMapping("/")
     public ResponseEntity<?> todos(){
-        return ResponseEntity.ok().body(new ResponseList(animeRepository.findAll()));
+        return ResponseEntity.ok().body(new ResponseList(animeRepository.findBy(ProjectionAnimeIdNameImage.class)));
     }
 
     @GetMapping("/{id}")

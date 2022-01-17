@@ -1,5 +1,6 @@
 INSERT INTO anime(name, description, type, year, imageurl) VALUES
-    ('One Piece', 'Random pirates', 'Shonen', 1998, '/images/123');
+    ('One Piece', 'Random pirates', 'Shonen', 1998, '/images/123'),
+    ('One Piece 2', 'Random pirates 2', 'Shonen', 1998, '/images/123');
 
 INSERT INTO author (name, imageurl) values
     ('Author 1', 'images/1'),
