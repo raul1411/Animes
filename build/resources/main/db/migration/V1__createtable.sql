@@ -46,4 +46,8 @@ CREATE TABLE favorite (
     userid uuid REFERENCES usser(userid) ON DELETE CASCADE,
     animeid uuid REFERENCES anime(animeid) ON DELETE CASCADE,
     PRIMARY KEY (userid, animeid));
-)
+
+CREATE TABLE users_group (
+    userid uuid REFERENCES usser(userid) ON DELETE CASCADE,
+    username varchar(24) REFERENCES usser(username) ON DELETE CASCADE,
+    PRIMARY KEY (userid));
