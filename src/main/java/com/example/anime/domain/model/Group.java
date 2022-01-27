@@ -11,5 +11,7 @@ public class Group {
 
     @Id
     public UUID groupid;
+    public UUID adminid;
     public String name;
+
 }

@@ -47,7 +47,17 @@ CREATE TABLE favorite (
     animeid uuid REFERENCES anime(animeid) ON DELETE CASCADE,
     PRIMARY KEY (userid, animeid));
 
+
+-----------------------------------------------------------------------
+
+CREATE TABLE groupp (
+    groupid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    adminid uuid REFERENCES usser(userid) ON DELETE CASCADE,
+    name text
+);
+
 CREATE TABLE users_group (
     userid uuid REFERENCES usser(userid) ON DELETE CASCADE,
-    username varchar(24) REFERENCES usser(username) ON DELETE CASCADE,
-    PRIMARY KEY (userid));
+    groupid uuid REFERENCES groupp(groupid) ON DELETE CASCADE,
+    PRIMARY KEY (userid, groupid));
+

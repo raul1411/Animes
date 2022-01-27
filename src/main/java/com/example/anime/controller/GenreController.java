@@ -1,6 +1,6 @@
 package com.example.anime.controller;
 
-import com.example.anime.domain.dto.Error;
+import com.example.anime.domain.dto.ResponseError;
 import com.example.anime.domain.dto.ResponseList;
 import com.example.anime.domain.model.Genre;
 import com.example.anime.domain.model.projection.ProjectionGenres;
@@ -32,7 +32,7 @@ public class GenreController {
     public ResponseEntity<?> findGenresById(@PathVariable UUID id) {
         Genre file = genreRepository.findById(id).orElse(null);
 
-        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Error.message("No s'ha trobat l'genere amd id: " + id));
+        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("No s'ha trobat l'genere amd id: " + id));
         return ResponseEntity.ok().body(genreRepository.findByGenreid(id, ProjectionGenres.class));
     }
 }

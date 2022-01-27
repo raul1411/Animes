@@ -1,6 +1,6 @@
 package com.example.anime.controller;
 
-import com.example.anime.domain.dto.Error;
+import com.example.anime.domain.dto.ResponseError;
 import com.example.anime.domain.dto.ResponseList;
 import com.example.anime.domain.model.Anime;
 import com.example.anime.domain.model.projection.ProjectionAnimeIdNameImage;
@@ -29,7 +29,7 @@ public class AnimeController {
     public ResponseEntity<?> findAnimesById(@PathVariable UUID id) {
         Anime file = animeRepository.findById(id).orElse(null);
 
-        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Error.message("No s'ha trobat l'anime amd id: " + id));
+        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("No s'ha trobat l'anime amd id: " + id));
         return ResponseEntity.ok().body(file);
     }
 
@@ -37,7 +37,7 @@ public class AnimeController {
     public ResponseEntity<?> createAnime(@RequestBody Anime anime) {
         for (Anime a : animeRepository.findAll()) {
             if (a.name.equals(anime.name)) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(Error.message("Ja existeix un anime amb el nom '" + anime.name + "'"));
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(ResponseError.message("Ja existeix un anime amb el nom '" + anime.name + "'"));
             }
         }
         animeRepository.save(anime);
@@ -48,9 +48,9 @@ public class AnimeController {
     public ResponseEntity<?> deleteAnimes(@PathVariable UUID id) {
         Anime file = animeRepository.findById(id).orElse(null);
 
-        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Error.message("No s'ha trobat l'anime amd id: " + id));
+        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("No s'ha trobat l'anime amd id: " + id));
 
         animeRepository.delete(file);
-        return ResponseEntity.ok().body(Error.message("S'ha eliminat l'anime amd id '" + id + "'"));
+        return ResponseEntity.ok().body(ResponseError.message("S'ha eliminat l'anime amd id '" + id + "'"));
     }
 }

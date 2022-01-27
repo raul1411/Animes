@@ -1,6 +1,6 @@
 package com.example.anime.controller;
 
-import com.example.anime.domain.dto.Error;
+import com.example.anime.domain.dto.ResponseError;
 import com.example.anime.domain.dto.ResponseList;
 import com.example.anime.domain.model.Author;
 import com.example.anime.repository.AuthorRepository;
@@ -34,7 +34,7 @@ public class AuthorController {
     public ResponseEntity<?> findAuthorsById(@PathVariable UUID id) {
         Author file = authorRepository.findById(id).orElse(null);
 
-        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Error.message("No s'ha trobat l'autor amd id: " + id));
+        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("No s'ha trobat l'autor amd id: " + id));
         return ResponseEntity.ok().body(file);
     }
 

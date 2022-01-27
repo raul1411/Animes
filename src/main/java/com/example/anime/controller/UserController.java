@@ -1,6 +1,6 @@
 package com.example.anime.controller;
 
-import com.example.anime.domain.dto.Error;
+import com.example.anime.domain.dto.ResponseError;
 import com.example.anime.domain.dto.*;
 import com.example.anime.domain.model.Favorite;
 import com.example.anime.domain.model.User;
@@ -41,12 +41,12 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(@PathVariable UUID id){
         User file = userRepository.findById(id).orElse(null);
-        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Error.message("No s'ha trobat l'usuari amd id: " + id));
+        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("No s'ha trobat l'usuari amd id: " + id));
         return ResponseEntity.ok().body(ResponseList.list(userRepository.findByUserid(id, ProjectionUserFavorites.class)));
     }
 
     @PostMapping("/favorites")
-    public ResponseEntity<?> addFavorite(@RequestBody FavoriteAnime favoriteAnime, Authentication authentication) {
+    public ResponseEntity<?> addFavorite(@RequestBody RequestFavoriteAnime favoriteAnime, Authentication authentication) {
         if (authentication != null) {
 
             User aUser = userRepository.findByUsername(authentication.getName());
@@ -68,7 +68,7 @@ public class UserController {
         return ResponseEntity.ok().body(userRepository.findByUsername(authentication.getName(), ProjectionUserFavorites.class));
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok().body(ResponseList.list(userRepository.findBy()));
     }
@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @DeleteMapping("/favorites")
-    public ResponseEntity<?> deleteFavorite(@RequestBody FavoriteAnime requestFavorite, Authentication authentication) {
+    public ResponseEntity<?> deleteFavorite(@RequestBody RequestFavoriteAnime requestFavorite, Authentication authentication) {
         if (authentication != null) {
 
             User aUser = userRepository.findByUsername(authentication.getName());

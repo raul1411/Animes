@@ -16,10 +16,14 @@ INSERT INTO anime_genre values
     ((SELECT animeid FROM anime WHERE name='One Piece'), (SELECT genreid FROM genre WHERE label='Genre One'));
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 INSERT INTO usser (username, password) VALUES
     ('Raul', crypt('pass', gen_salt('bf'))),
     ('Oihane', crypt('pass2', gen_salt('bf'))),
     ('Bryan', crypt('pass3', gen_salt('bf'))),
     ('Montse', crypt('pass4', gen_salt('bf')));
 
-INSERT INTO groupp(name) VALUES ('Grupo de Bryan', 'Grupo de Raúl');
+INSERT INTO groupp(name) VALUES
+    ('Grupo de Bryan'),
+    ('Grupo de Raul'),
+    ('Grupo de Sergit');

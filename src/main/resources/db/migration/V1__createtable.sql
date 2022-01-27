@@ -50,12 +50,14 @@ CREATE TABLE favorite (
 
 -----------------------------------------------------------------------
 
-CREATE TABLE users_group (
-    userid uuid REFERENCES usser(userid) ON DELETE CASCADE,
-    groupid text REFERENCES groupp(groupid) ON DELETE CASCADE,
-    PRIMARY KEY (userid, groupid));
-
 CREATE TABLE groupp (
     groupid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    adminid uuid REFERENCES usser(userid) ON DELETE CASCADE,
     name text
 );
+
+CREATE TABLE users_group (
+    userid uuid REFERENCES usser(userid) ON DELETE CASCADE,
+    groupid uuid REFERENCES groupp(groupid) ON DELETE CASCADE,
+    PRIMARY KEY (userid, groupid));
+
