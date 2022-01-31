@@ -63,7 +63,7 @@ public class GroupController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el Grupo");
         }
     }
-    /*
+
     @DeleteMapping("/{id}/user/") // el id del grupo
     public ResponseEntity<?> deleteMember(@PathVariable UUID id, @RequestBody RequestUserId requestDeleteMember) { // el requestBody es el del usuario
         if (groupRepository.findByGroupid(id)!=null) {
@@ -85,11 +85,12 @@ public class GroupController {
 
                 if (encontrado==true){
                     Group g=groupRepository.findByGroupid(id);
-                    Member a=new Member();
-                    a.groupid=g.groupid;
+                    Member m=new Member();
+                    m.groupid=g.groupid;
+                    m.userid=requestDeleteMember.userid;
+                    memberRepository.delete(m);
 
-                    groupRepository.delete(a);
-
+                    return ResponseEntity.ok().body("Usuario eliminado correctamente");
                     //System.out.println(usuario.username);
                 }
                 else{
@@ -106,5 +107,5 @@ public class GroupController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el Grupo");
         }
         return null;
-    }*/
+    }
 }
