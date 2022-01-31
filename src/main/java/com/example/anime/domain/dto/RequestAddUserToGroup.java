@@ -5,5 +5,5 @@ import java.util.UUID;
 public class RequestAddUserToGroup {
 
     public UUID userid;
-
+    public UUID groupid;
 }

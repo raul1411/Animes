@@ -13,9 +13,9 @@ public interface GroupRepository extends JpaRepository<Group, UUID> {
 
   //  User findByMemberName(String username);
 
-    <T> List<T> findByUsername(String username, Class<T> type);
+/*    <T> List<T> findByUsername(String username, Class<T> type);*/
 
     <T> List<T> findByGroupid(UUID id, Class<T> type);
 
-    User findByGroupid(UUID id);
+    Group findByGroupid(UUID id);
 }

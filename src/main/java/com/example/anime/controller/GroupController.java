@@ -3,6 +3,7 @@ package com.example.anime.controller;
 import com.example.anime.domain.dto.RequestAddUserToGroup;
 import com.example.anime.domain.dto.ResponseList;
 import com.example.anime.domain.model.Member;
+import com.example.anime.domain.model.compositekeys.ClaveUseridGroupid;
 import com.example.anime.domain.model.projection.ProjectionGroup;
 import com.example.anime.repository.GroupRepository;
 import com.example.anime.repository.MemberRepository;
@@ -30,9 +31,10 @@ public class GroupController {
     public ResponseEntity<?> todos(){
         return ResponseEntity.ok().body(new ResponseList(groupRepository.findBy(ProjectionGroup.class)));
     }
+   // @PostMapping("/{id}/user") @PathVariable UUID id
 
     @PostMapping("/{id}/user")
-    public ResponseEntity<?> postUser(@PathVariable UUID id, @RequestBody RequestAddUserToGroup requestAddUserToGroup) {
+    public ResponseEntity<?> postUser(@PathVariable UUID id ,@RequestBody RequestAddUserToGroup requestAddUserToGroup) {
         if (userRepository.findByUserid(requestAddUserToGroup.userid) != null) {
             if (groupRepository.findByGroupid(id)!=null){
                 Member member = new Member();
