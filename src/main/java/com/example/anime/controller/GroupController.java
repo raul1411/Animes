@@ -106,6 +106,6 @@ public class GroupController {
             //no existe el grupo
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el Grupo");
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("Error desconocido");
     }
 }
