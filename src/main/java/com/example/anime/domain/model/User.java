@@ -17,4 +17,7 @@ public class User {
 
     @ManyToMany(mappedBy = "favoritedby")
     public Set<Anime> favorites;
+
+    @ManyToMany(mappedBy = "members")
+    public Set<Group> group;
 }
