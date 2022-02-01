@@ -1,10 +1,12 @@
 package com.example.anime.controller;
 
-import com.example.anime.domain.dto.RequestAddUserToGroup;
+import com.example.anime.domain.dto.RequestUserId;
 import com.example.anime.domain.dto.ResponseList;
+import com.example.anime.domain.model.Group;
 import com.example.anime.domain.model.Member;
-import com.example.anime.domain.model.compositekeys.ClaveUseridGroupid;
+import com.example.anime.domain.model.User;
 import com.example.anime.domain.model.projection.ProjectionGroup;
+import com.example.anime.domain.model.projection.ProjectionMemberInfo1;
 import com.example.anime.repository.GroupRepository;
 import com.example.anime.repository.MemberRepository;
 import com.example.anime.repository.UserRepository;
@@ -31,15 +33,16 @@ public class GroupController {
     public ResponseEntity<?> todos(){
         return ResponseEntity.ok().body(new ResponseList(groupRepository.findBy(ProjectionGroup.class)));
     }
-   // @PostMapping("/{id}/user") @PathVariable UUID id
 
-    @PostMapping("/{id}/user")
-    public ResponseEntity<?> postUser(@PathVariable UUID id ,@RequestBody RequestAddUserToGroup requestAddUserToGroup) {
+    @PostMapping("/{id}/user/")
+    public ResponseEntity<?> postUser(@PathVariable UUID id, @RequestBody RequestUserId requestAddUserToGroup) {
         if (userRepository.findByUserid(requestAddUserToGroup.userid) != null) {
             if (groupRepository.findByGroupid(id)!=null){
                 Member member = new Member();
-                member.userid = requestAddUserToGroup.userid;
-                member.groupid = id;
+                User user=userRepository.findByUserid(requestAddUserToGroup.userid);
+                Group group = groupRepository.findByGroupid(id);
+                member.userid = user.userid;
+                member.groupid = group.groupid;
                 return ResponseEntity.ok().body(memberRepository.save(member));
             }else
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el Grupo");
@@ -48,11 +51,61 @@ public class GroupController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el usuario");
     }
 
-    @GetMapping("/{id}/users")
+    @GetMapping("/{id}/user/")
     public ResponseEntity<?> getMembers(@PathVariable UUID id) {
         if (groupRepository.findByGroupid(id)!=null) {
-         //   return ResponseEntity.ok().body(new ResponseList(memberRepository.findBy())); //pasar la lista de miembros findByGroupid como return
+            //exist e el grupo
+            Group group = groupRepository.findByGroupid(id);
+            return ResponseEntity.ok().body(new ResponseList(groupRepository.findByGroupid(id, ProjectionMemberInfo1.class)));
         }
-        return ResponseEntity.ok().body(new ResponseList(groupRepository.findBy(ProjectionGroup.class)));
+        else{
+            //no existe el grupo
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el Grupo");
+        }
+    }
+
+    @DeleteMapping("/{id}/user/") // el id del grupo
+    public ResponseEntity<?> deleteMember(@PathVariable UUID id, @RequestBody RequestUserId requestDeleteMember) { // el requestBody es el del usuario
+        if (groupRepository.findByGroupid(id)!=null) {
+            if (userRepository.findByUserid(requestDeleteMember.userid) != null) {
+                //User miembro=groupRepository.findBy(requestDeleteMember.userid);
+                //System.out.println(miembro.username);
+
+                User user=new User();
+                Group grupo=groupRepository.findByGroupid(id);//tienes el grupo
+                //el grupo tiene un set de miembros
+                //se puede hacer un for
+                boolean encontrado=false;
+                for(User a:grupo.members){
+                    if(a.userid.equals(requestDeleteMember.userid)){
+                        user=a;
+                        encontrado=true;
+                    }
+                }
+
+                if (encontrado==true){
+                    Group g=groupRepository.findByGroupid(id);
+                    Member m=new Member();
+                    m.groupid=g.groupid;
+                    m.userid=requestDeleteMember.userid;
+                    memberRepository.delete(m);
+
+                    return ResponseEntity.ok().body("Usuario eliminado correctamente");
+                    //System.out.println(usuario.username);
+                }
+                else{
+                    System.out.println("El usuario no esta en el grupo");
+                }
+            }
+            else {
+                //no existe el usuario
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el usuario");
+            }
+        }
+        else {
+            //no existe el grupo
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el Grupo");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("Error desconocido");
     }
 }
