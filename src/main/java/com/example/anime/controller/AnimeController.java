@@ -37,10 +37,12 @@ public class AnimeController {
         return ResponseEntity.ok().body(anime);
     }
 
+    //ESTO
     @GetMapping("/search/")
     public ResponseEntity<?> findAnimesBySearch(@RequestBody RequestSearch requestSearch) {
         List<ProjectionAnimeIdNameImage> animes = animeRepository.findByNameContaining(requestSearch.name, ProjectionAnimeIdNameImage.class);
-        return ResponseEntity.ok(animes);
+
+        return ResponseEntity.ok().body(new ResponseList(animes));
     }
 
     @PostMapping("/")
