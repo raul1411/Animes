@@ -12,6 +12,7 @@ public interface ProjectionAnimeFull {
     String getType();
     int getYear();
     String getImageurl();
+    float getRating();
 
     /*
     *    public String name;

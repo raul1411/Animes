@@ -18,6 +18,7 @@ public class Anime {
     public String type;
     public int year;
     public String imageurl;
+    public float rating;
 
     @ManyToMany
     @JoinTable(name = "anime_author", joinColumns = @JoinColumn(name = "animeid"), inverseJoinColumns = @JoinColumn(name = "authorid"))
