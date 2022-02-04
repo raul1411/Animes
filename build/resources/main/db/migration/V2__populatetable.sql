@@ -27,3 +27,12 @@ INSERT INTO groupp(name) VALUES
     ('Grupo de Bryan'),
     ('Grupo de Raul'),
     ('Grupo de Sergit');
+
+INSERT INTO rating(userid, animeid, stars) VALUES
+    ((SELECT userid FROM usser WHERE username = 'Raul'),
+    (SELECT animeid FROM anime WHERE name = 'One Piece'),
+    (10));
+
+UPDATE anime
+SET rating=sum(stars)/count(*) from rating where animeid IN (select animeid from anime where name='One Piece')
+where animeid in (select animeid from anime where name='One Piece');

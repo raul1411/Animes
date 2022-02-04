@@ -4,7 +4,8 @@ CREATE TABLE anime (
     description text,
     type text,
     year int,
-    imageurl text);
+    imageurl text,
+    rating float DEFAULT 0);
 
 CREATE TABLE file (
     fileid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -61,3 +62,9 @@ CREATE TABLE users_group (
     groupid uuid REFERENCES groupp(groupid) ON DELETE CASCADE,
     PRIMARY KEY (userid, groupid));
 
+
+CREATE TABLE rating (
+    userid uuid REFERENCES usser(userid) ON DELETE CASCADE,
+    animeid uuid REFERENCES anime(animeid) ON DELETE CASCADE,
+    PRIMARY KEY (userid, animeid),
+    stars float DEFAULT 0);

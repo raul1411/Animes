@@ -1,5 +1,6 @@
 package com.example.anime.domain.model.projection;
 
+import com.example.anime.domain.model.Rating;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Set;
@@ -14,15 +15,11 @@ public interface ProjectionAnimeFull {
     String getImageurl();
     float getRating();
 
-    /*
-    *    public String name;
-    public String description;
-    public String type;
-    public int year;
-    public String imageurl;
 
-    * */
 
     @JsonIgnoreProperties("animes")
     Set<ProjectionAuthor> getAuthors();
+
+    @JsonIgnoreProperties({"user","anime"})
+    Set<ProjectionRatingIdStars> getRatedBy();
 }

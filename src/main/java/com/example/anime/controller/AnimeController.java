@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -73,19 +74,26 @@ public class AnimeController {
         return ResponseEntity.ok().body(requestAnime);
     }
 
-    @PostMapping("/rating/{id}")
-    public ResponseEntity<?> postRating(@PathVariable UUID idAnime, @RequestBody RequestRating requestRating) {
-        List<Rating> ratingsDelAnime;
+    //@GetMapping("")
+
+    @PostMapping("/rating")
+    public ResponseEntity<?> postRating(@RequestBody RequestRating requestRating) {
+        Set<Rating> ratingsDelAnime;
         if (requestRating != null) {
             if (requestRating.rating < 0 || requestRating.rating > 10) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(ResponseError.message("La valoració ha de ser del 0 al 10!"));
             }else {
-                ClaveAnimeidUserid clave = new ClaveAnimeidUserid();
+                /*ClaveAnimeidUserid clave = new ClaveAnimeidUserid();
                 clave.animeid = idAnime;
-                clave.userid = requestRating.userid;
+                clave.userid = requestRating.userid;*/
                 //Lista de todos los ratings del anime escogido:
-                ratingsDelAnime = ratingRepository.findByRatingid(clave).ratings;
-                       // animeRepository.findByAnimeid(idAnime).ratings;
+                Rating newRating = new Rating();
+                newRating.animeid = requestRating.animeid;
+                newRating.stars = requestRating.rating;
+                newRating.userid = requestRating.userid;
+
+                ratingRepository.save(newRating);
+                ratingsDelAnime = animeRepository.findByAnimeid(requestRating.animeid).ratedBy;
                 //valor del nuevo rating a añadir
                 float nuevoRating = requestRating.rating;
                 //Hacer media
@@ -94,8 +102,7 @@ public class AnimeController {
                     valorTotalRatings+=rating.stars;
                 }
                 valorTotalRatings+=nuevoRating;
-                float mediaTotalRating = valorTotalRatings/ratingsDelAnime.size();
-                animeRepository.findByAnimeid(idAnime).rating =mediaTotalRating;
+                animeRepository.findByAnimeid(requestRating.animeid).setRating(valorTotalRatings/ratingsDelAnime.size());
                 return ResponseEntity.ok().body(requestRating);
             }
         }else {
