@@ -27,3 +27,4 @@ INSERT INTO groupp(name) VALUES
     ('Grupo de Bryan'),
     ('Grupo de Raul'),
     ('Grupo de Sergit');
+
