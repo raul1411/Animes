@@ -33,6 +33,3 @@ INSERT INTO rating(userid, animeid, stars) VALUES
     (SELECT animeid FROM anime WHERE name = 'One Piece'),
     (10));
 
-UPDATE anime
-SET rating=sum(stars)/count(*) from rating where animeid IN (select animeid from anime where name='One Piece')
-where animeid in (select animeid from anime where name='One Piece');

@@ -23,17 +23,5 @@ public class Rating {
     @ManyToOne
     @JoinColumn(name = "userid",insertable = false , updatable = false)
     public User user;
-
-//    @ManyToMany
-//    @JoinTable(name = "users_group", joinColumns = @JoinColumn(name = "groupid"), inverseJoinColumns = @JoinColumn(name = "userid"))
-//    @JsonIgnoreProperties("group")
-//    public Set<User> members;
-//
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public Anime getAnime() {
-//        return anime;
-//    }
+    
 }

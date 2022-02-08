@@ -39,17 +39,6 @@ public class Anime {
     @OneToMany(mappedBy = "anime")
     public Set<Rating> ratedBy = new HashSet<>();
 
-//    public void setRating(float rating) {
-//        this.rating = rating;
-//    }
-//
-//    /*@ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumns({
-//            @JoinColumn(name = "userid"),
-//            @JoinColumn(name = "animeid")
-//    }))*/
-
-
     public void setRating(float newRatingValue){
         float total;
         float value =0, average =0;
