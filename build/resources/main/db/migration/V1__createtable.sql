@@ -4,7 +4,8 @@ CREATE TABLE anime (
     description text,
     type text,
     year int,
-    imageurl text);
+    imageurl text,
+    rating float DEFAULT 0);
 
 CREATE TABLE file (
     fileid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
