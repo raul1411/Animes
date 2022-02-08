@@ -21,5 +21,5 @@ public interface ProjectionAnimeFull {
     Set<ProjectionAuthor> getAuthors();
 
     @JsonIgnoreProperties({"user","anime"})
-    Set<ProjectionRatingIdStars> getRatedBy();
+    Set<Rating> getRatedBy();
 }
