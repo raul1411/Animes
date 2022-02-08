@@ -62,3 +62,9 @@ CREATE TABLE users_group (
     groupid uuid REFERENCES groupp(groupid) ON DELETE CASCADE,
     PRIMARY KEY (userid, groupid));
 
+
+CREATE TABLE rating (
+    userid uuid REFERENCES usser(userid) ON DELETE CASCADE,
+    animeid uuid REFERENCES anime(animeid) ON DELETE CASCADE,
+    PRIMARY KEY (userid, animeid),
+    stars float DEFAULT 0);

@@ -1,6 +1,10 @@
 package com.example.anime.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,4 +24,12 @@ public class User {
 
     @ManyToMany(mappedBy = "members")
     public Set<Group> group;
+
+    @OneToMany(mappedBy = "user")
+    public Set<Rating> ratings = new HashSet<>();
+
+ /*   //    @JsonIgnoreProperties({"ratings"})
+
+    @ManyToMany(mappedBy = "ratings")
+    public List<Anime> rated;*/
 }

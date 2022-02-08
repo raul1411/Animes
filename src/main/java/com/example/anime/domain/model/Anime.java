@@ -3,6 +3,8 @@ package com.example.anime.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,7 +33,22 @@ public class Anime {
     public Set<Genre> genres;
 
     @ManyToMany
-    @JoinTable(name = "favorite", joinColumns = @JoinColumn(name ="animeid"), inverseJoinColumns = @JoinColumn(name = "userid"))
+    @JoinTable(name = "favorite", joinColumns = @JoinColumn(name = "animeid"), inverseJoinColumns = @JoinColumn(name = "userid"))
     @JsonIgnoreProperties({"password", "enabled", "favorites"})
     public Set<User> favoritedby;
+
+    @OneToMany(mappedBy = "anime")
+    public Set<Rating> ratedBy = new HashSet<>();
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    /*@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "userid"),
+            @JoinColumn(name = "animeid")
+    }))*/
+
+
 }
