@@ -1,12 +1,7 @@
 package com.example.anime.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "usser")
@@ -28,17 +23,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     public Set<Rating> ratings = new HashSet<>();
 
-//    @ManyToMany
-//    @JoinTable(name = "message", joinColumns = {@JoinColumn(name = "userid"), @JoinColumn(name = "receiverid")})
-//    public Set<Message> receivedmessages = new HashSet<>();
+    //-----------------------------
 
-    @OneToMany(mappedBy = "receiver")
-    public Set<Message> receivedmessages = new HashSet<>();
+    //   1 .. *         1
+    // M --------------- U
+    //
 
-//    @ManyToMany
-//    @JoinTable(name = "message", joinColumns = {@JoinColumn(name = "userid"), @JoinColumn(name = "transmitterid")})
-//    public Set<Message> sentmessages = new HashSet<>();
-
+//    @OneToMany(mappedBy = "receiver")
+//    public List<Message> receivedmessages;
 
 
 

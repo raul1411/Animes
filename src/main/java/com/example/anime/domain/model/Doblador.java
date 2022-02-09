@@ -13,9 +13,5 @@ public class Doblador {
         public String name;
         public String imageurl;
 
-        /*
-        @ManyToMany(mappedBy = "dobladors")
-        Set<Anime> animes;
-*/
 }
 

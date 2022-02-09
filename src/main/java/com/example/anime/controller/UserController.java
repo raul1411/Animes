@@ -1,11 +1,12 @@
 package com.example.anime.controller;
 
-import com.example.anime.domain.dto.ResponseError;
 import com.example.anime.domain.dto.*;
 import com.example.anime.domain.model.Favorite;
+import com.example.anime.domain.model.Message;
 import com.example.anime.domain.model.User;
 import com.example.anime.domain.model.projection.ProjectionUserFavorites;
 import com.example.anime.repository.FavoriteRepository;
+import com.example.anime.repository.MessageRepository;
 import com.example.anime.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -22,8 +25,13 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired private BCryptPasswordEncoder passwordEncoder;
-    @Autowired private FavoriteRepository favRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private FavoriteRepository favRepository;
+    @Autowired
+    private MessageRepository messageRepository;
+
 
     @PostMapping(path = "/register")
     public ResponseEntity<?> register(@RequestBody RequestUserRegister requestUserRegister) {
@@ -39,9 +47,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUser(@PathVariable UUID id){
+    public ResponseEntity<?> getUser(@PathVariable UUID id) {
         User file = userRepository.findById(id).orElse(null);
-        if(file==null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("No s'ha trobat l'usuari amd id: " + id));
+        if (file == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("No s'ha trobat l'usuari amd id: " + id));
         return ResponseEntity.ok().body(ResponseList.list(userRepository.findByUserid(id, ProjectionUserFavorites.class)));
     }
 
@@ -69,12 +78,37 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> getAll(){
+    public ResponseEntity<?> getAll() {
         return ResponseEntity.ok().body(ResponseList.list(userRepository.findBy()));
     }
 
+    @GetMapping("/messages")
+    public ResponseEntity<?> getMessages(Authentication authentication){
+        UUID userid = userRepository.findByUsername(authentication.getName()).userid;
+        List<Message> listMsg = messageRepository.findAll().stream()
+                .filter(msg -> msg.receiverid.equals(userid))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/messages")
+    public ResponseEntity<?> postMessages(@RequestBody RequestMessage requestMessage, Authentication authentication){
+        UUID userid = userRepository.findByUsername(authentication.getName()).userid;
+
+        if(requestMessage!=null){
+            Message msg = new Message();
+            msg.transmitterid = userid;
+            msg.receiverid = requestMessage.receiverid;
+            msg.message = requestMessage.message;
+            messageRepository.save(msg);
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("Not found"));
+    }
+
     @GetMapping("/register/web")
-    public String hack(){
+    public String hack() {
         return "<div style='display:flex;flex-direction:column;width:20em;gap:0.5em'>" +
                 "<input name='username' id='username' placeholder='Username'>" +
                 "<input id='password' type='password' placeholder='Password'>" +
@@ -82,7 +116,8 @@ public class UserController {
     }
 
     @DeleteMapping("/favorites")
-    public ResponseEntity<?> deleteFavorite(@RequestBody RequestFavoriteAnime requestFavorite, Authentication authentication) {
+    public ResponseEntity<?> deleteFavorite(@RequestBody RequestFavoriteAnime requestFavorite, Authentication
+            authentication) {
         if (authentication != null) {
 
             User aUser = userRepository.findByUsername(authentication.getName());

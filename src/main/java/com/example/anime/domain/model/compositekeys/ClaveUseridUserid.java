@@ -6,4 +6,5 @@ import java.util.UUID;
 public class ClaveUseridUserid implements Serializable {
     UUID transmitterid;
     UUID receiverid;
+    UUID messageid;
 }
