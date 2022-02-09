@@ -3,7 +3,6 @@ package com.example.anime.controller;
 import com.example.anime.domain.dto.*;
 import com.example.anime.domain.model.Anime;
 import com.example.anime.domain.model.Rating;
-import com.example.anime.domain.model.compositekeys.ClaveAnimeidUserid;
 import com.example.anime.domain.model.projection.ProjectionAnimeFull;
 import com.example.anime.domain.model.projection.ProjectionAnimeIdNameImage;
 import com.example.anime.repository.AnimeRepository;
@@ -74,7 +73,6 @@ public class AnimeController {
         return ResponseEntity.ok().body(requestAnime);
     }
 
-    //@GetMapping("")
 
     @PostMapping("/rating")
     public ResponseEntity<?> postRating(@RequestBody RequestRating requestRating) {
@@ -83,30 +81,16 @@ public class AnimeController {
             if (requestRating.rating < 0 || requestRating.rating > 10) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(ResponseError.message("La valoració ha de ser del 0 al 10!"));
             }else {
-                /*ClaveAnimeidUserid clave = new ClaveAnimeidUserid();
-                clave.animeid = idAnime;
-                clave.userid = requestRating.userid;*/
-                //Lista de todos los ratings del anime escogido:
-                Rating newRating = new Rating();
+                animeRepository.findByAnimeid(requestRating.animeid).setRating(requestRating.rating);
+                Rating newRating  = new Rating();
+                newRating.userid = requestRating.userid;
                 newRating.animeid = requestRating.animeid;
                 newRating.stars = requestRating.rating;
-                newRating.userid = requestRating.userid;
-
                 ratingRepository.save(newRating);
-                ratingsDelAnime = animeRepository.findByAnimeid(requestRating.animeid).ratedBy;
-                //valor del nuevo rating a añadir
-                float nuevoRating = requestRating.rating;
-                //Hacer media
-                float valorTotalRatings =0f;
-                for (Rating rating: ratingsDelAnime){
-                    valorTotalRatings+=rating.stars;
-                }
-                valorTotalRatings+=nuevoRating;
-                animeRepository.findByAnimeid(requestRating.animeid).setRating(valorTotalRatings/ratingsDelAnime.size());
                 return ResponseEntity.ok().body(requestRating);
             }
         }else {
-            return null;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("No has introduit tots els camps"));
         }
 
     }

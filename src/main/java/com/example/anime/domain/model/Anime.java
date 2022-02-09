@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -40,15 +39,23 @@ public class Anime {
     @OneToMany(mappedBy = "anime")
     public Set<Rating> ratedBy = new HashSet<>();
 
-    public void setRating(float rating) {
-        this.rating = rating;
+    public void setRating(float newRatingValue){
+        float total;
+        float value =0, average =0;
+        //si no tiene ratings, el rating del anime se pone al primer rating que entra
+        if(this.ratedBy.isEmpty()){
+            this.rating = newRatingValue;
+        }else {
+            //sumar los valores de estrellas de cada rating del anime
+            for (Rating rating : this.ratedBy){
+                value +=rating.stars;
+            }
+            value +=newRatingValue;
+            average = value/(this.ratedBy.size()+1);
+            this.rating = average;
+        }
     }
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "userid"),
-            @JoinColumn(name = "animeid")
-    }))*/
 
 
 }
