@@ -28,8 +28,21 @@ public class User {
     @OneToMany(mappedBy = "user")
     public Set<Rating> ratings = new HashSet<>();
 
- /*   //    @JsonIgnoreProperties({"ratings"})
+//    @ManyToMany
+//    @JoinTable(name = "message", joinColumns = {@JoinColumn(name = "userid"), @JoinColumn(name = "receiverid")})
+//    public Set<Message> receivedmessages = new HashSet<>();
 
-    @ManyToMany(mappedBy = "ratings")
-    public List<Anime> rated;*/
+    @OneToMany(mappedBy = "receiver")
+    public Set<Message> receivedmessages = new HashSet<>();
+
+//    @ManyToMany
+//    @JoinTable(name = "message", joinColumns = {@JoinColumn(name = "userid"), @JoinColumn(name = "transmitterid")})
+//    public Set<Message> sentmessages = new HashSet<>();
+
+
+
+
+
+
+
 }
