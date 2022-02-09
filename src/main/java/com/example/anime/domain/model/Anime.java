@@ -40,11 +40,12 @@ public class Anime {
     public Set<Rating> ratedBy = new HashSet<>();
 
     public void setRating(float newRatingValue){
+
         float total;
         float value =0, average =0;
         //si no tiene ratings, el rating del anime se pone al primer rating que entra
         if(this.ratedBy.isEmpty()){
-            this.rating = newRatingValue;
+            this.rating = (float) (Math.round(newRatingValue *Math.pow(10, 2))/Math.pow(10, 2));
         }else {
             //sumar los valores de estrellas de cada rating del anime
             for (Rating rating : this.ratedBy){
@@ -52,7 +53,7 @@ public class Anime {
             }
             value +=newRatingValue;
             average = value/(this.ratedBy.size()+1);
-            this.rating = average;
+            this.rating = (float) (Math.round(average *Math.pow(10, 2))/Math.pow(10, 2));
         }
     }
 
