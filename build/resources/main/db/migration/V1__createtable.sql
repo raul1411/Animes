@@ -68,3 +68,10 @@ CREATE TABLE rating (
     animeid uuid REFERENCES anime(animeid) ON DELETE CASCADE,
     PRIMARY KEY (userid, animeid),
     stars float DEFAULT 0);
+
+CREATE TABLE message(
+    transmitterid uuid REFERENCES usser(userid) ON DELETE CASCADE,
+    receiverid uuid REFERENCES usser(userid) ON DELETE CASCADE,
+    PRIMARY KEY (transmitterid,receiverid),
+    message text
+);
