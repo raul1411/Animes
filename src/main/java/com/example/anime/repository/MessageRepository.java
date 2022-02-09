@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface MessageRepository extends JpaRepository<Message, UUID> {
     <T> List<T> findBy(Class<T> type);
+
 }

@@ -70,10 +70,9 @@ CREATE TABLE rating (
     stars float DEFAULT 0);
 
 CREATE TABLE message(
+    messageid uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     transmitterid uuid REFERENCES usser(userid) ON DELETE CASCADE,
     receiverid uuid REFERENCES usser(userid) ON DELETE CASCADE,
-    messageid uuid NOT NULL DEFAULT gen_random_uuid(),
-    PRIMARY KEY (receiverid, transmitterid, messageid),
     message text
 );
 

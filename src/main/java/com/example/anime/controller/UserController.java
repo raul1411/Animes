@@ -4,6 +4,7 @@ import com.example.anime.domain.dto.*;
 import com.example.anime.domain.model.Favorite;
 import com.example.anime.domain.model.Message;
 import com.example.anime.domain.model.User;
+import com.example.anime.domain.model.projection.ProjectionMessage;
 import com.example.anime.domain.model.projection.ProjectionUserFavorites;
 import com.example.anime.repository.FavoriteRepository;
 import com.example.anime.repository.MessageRepository;
@@ -88,16 +89,17 @@ public class UserController {
         List<Message> listMsg = messageRepository.findAll().stream()
                 .filter(msg -> msg.receiverid.equals(userid))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok().body(new ResponseList(messageRepository.findBy(ProjectionMessage.class)));
     }
 
     @PostMapping("/messages")
     public ResponseEntity<?> postMessages(@RequestBody RequestMessage requestMessage, Authentication authentication){
-        UUID userid = userRepository.findByUsername(authentication.getName()).userid;
+        UUID transmitterid = userRepository.findByUsername(authentication.getName()).userid;
 
         if(requestMessage!=null){
             Message msg = new Message();
-            msg.transmitterid = userid;
+            msg.transmitterid = transmitterid;
             msg.receiverid = requestMessage.receiverid;
             msg.message = requestMessage.message;
             messageRepository.save(msg);
