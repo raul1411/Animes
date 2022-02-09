@@ -16,11 +16,4 @@ public class Message {
 
     public String message;
 
-//
-//    @ManyToOne
-//    @JoinColumn(name = "userid",  insertable = false , updatable = false)
-//    public User receiver;
-
-
-
 }

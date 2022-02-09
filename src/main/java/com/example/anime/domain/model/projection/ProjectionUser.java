@@ -7,5 +7,5 @@ public interface ProjectionUser {
     String getUsername();
 
 
-    //List<Message> getReceivedmesssages();
+
 }

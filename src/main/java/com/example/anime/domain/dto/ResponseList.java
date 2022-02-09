@@ -6,6 +6,7 @@ public class ResponseList {
 
     public List<?> result;
 
+
     public ResponseList(List<?> result) {
         this.result = result;
     }

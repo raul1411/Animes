@@ -90,7 +90,7 @@ public class UserController {
                 .filter(msg -> msg.receiverid.equals(userid))
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().body(new ResponseList(messageRepository.findBy(ProjectionMessage.class)));
+        return ResponseEntity.ok().body(new ResponseListMessage(messageRepository.findBy(ProjectionMessage.class),listMsg.size()));
     }
 
     @PostMapping("/messages")

@@ -45,7 +45,6 @@ public class AnimeController {
         return ResponseEntity.ok().body(anime);
     }
 
-    //ESTO
     @GetMapping("/search/")
     public ResponseEntity<?> findAnimesBySearch(@RequestBody RequestSearch requestSearch) {
         List<ProjectionAnimeIdNameImage> animes = animeRepository.findByNameContaining(requestSearch.name, ProjectionAnimeIdNameImage.class);

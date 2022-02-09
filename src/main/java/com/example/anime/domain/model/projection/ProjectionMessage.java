@@ -9,4 +9,6 @@ public interface ProjectionMessage {
     UUID getTransmitterid();
     String getMessage();
 
+
+
 }

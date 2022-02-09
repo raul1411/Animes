@@ -54,27 +54,22 @@ public class GroupController {
     @GetMapping("/{id}/user/")
     public ResponseEntity<?> getMembers(@PathVariable UUID id) {
         if (groupRepository.findByGroupid(id)!=null) {
-            //exist e el grupo
             Group group = groupRepository.findByGroupid(id);
             return ResponseEntity.ok().body(new ResponseList(groupRepository.findByGroupid(id, ProjectionMemberInfo1.class)));
         }
         else{
-            //no existe el grupo
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el Grupo");
         }
     }
 
-    @DeleteMapping("/{id}/user/") // el id del grupo
+    @DeleteMapping("/{id}/user/")
     public ResponseEntity<?> deleteMember(@PathVariable UUID id, @RequestBody RequestUserId requestDeleteMember) { // el requestBody es el del usuario
         if (groupRepository.findByGroupid(id)!=null) {
             if (userRepository.findByUserid(requestDeleteMember.userid) != null) {
-                //User miembro=groupRepository.findBy(requestDeleteMember.userid);
-                //System.out.println(miembro.username);
 
                 User user=new User();
                 Group grupo=groupRepository.findByGroupid(id);//tienes el grupo
-                //el grupo tiene un set de miembros
-                //se puede hacer un for
+
                 boolean encontrado=false;
                 for(User a:grupo.members){
                     if(a.userid.equals(requestDeleteMember.userid)){
@@ -91,19 +86,16 @@ public class GroupController {
                     memberRepository.delete(m);
 
                     return ResponseEntity.ok().body("Usuario eliminado correctamente");
-                    //System.out.println(usuario.username);
                 }
                 else{
                     System.out.println("El usuario no esta en el grupo");
                 }
             }
             else {
-                //no existe el usuario
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el usuario");
             }
         }
         else {
-            //no existe el grupo
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontro el Grupo");
         }
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("Error desconocido");

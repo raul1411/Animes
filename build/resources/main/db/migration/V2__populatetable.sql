@@ -28,8 +28,3 @@ INSERT INTO groupp(name) VALUES
     ('Grupo de Raul'),
     ('Grupo de Sergit');
 
---INSERT INTO rating(userid, animeid, stars) VALUES
---    ((SELECT userid FROM usser WHERE username = 'Raul'),
---    (SELECT animeid FROM anime WHERE name = 'One Piece'),
---    (10));
-

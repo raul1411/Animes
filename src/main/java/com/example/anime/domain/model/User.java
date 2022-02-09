@@ -23,18 +23,4 @@ public class User {
     @OneToMany(mappedBy = "user")
     public Set<Rating> ratings = new HashSet<>();
 
-    //-----------------------------
-
-    //   1 .. *         1
-    // M --------------- U
-    //
-
-//    @OneToMany(mappedBy = "receiver")
-//    public List<Message> receivedmessages;
-
-
-
-
-
-
 }
