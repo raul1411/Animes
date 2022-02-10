@@ -86,33 +86,40 @@ public class UserController {
 
     @GetMapping("/messages")
     public ResponseEntity<?> getMessages(Authentication authentication){
-        UUID userid = userRepository.findByUsername(authentication.getName()).userid;
+        if(authentication!=null){
+            UUID userid = userRepository.findByUsername(authentication.getName()).userid;
 
-        List<Message> listMsg = messageRepository.findAll().stream()
-                .filter(msg -> msg.receiverid.equals(userid))
-                .collect(Collectors.toList());
-        List<ProjectionMessage> listProjection = new ArrayList<>();
-        for(Message message: listMsg){
-            listProjection.add(messageRepository.findByMessageid(message.messageid));
+            List<Message> listMsg = messageRepository.findAll().stream()
+                    .filter(msg -> msg.receiverid.equals(userid))
+                    .collect(Collectors.toList());
+            List<ProjectionMessage> listProjection = new ArrayList<>();
+            for(Message message: listMsg){
+                listProjection.add(messageRepository.findByMessageid(message.messageid));
+            }
+
+            return ResponseEntity.ok().body(new ResponseListMessage(listProjection,listMsg.size()));
         }
-
-        return ResponseEntity.ok().body(new ResponseListMessage(listProjection,listMsg.size()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ResponseMessage.message("No autoritzat"));
     }
 
     @PostMapping("/messages")
     public ResponseEntity<?> postMessages(@RequestBody RequestMessage requestMessage, Authentication authentication){
-        UUID transmitterid = userRepository.findByUsername(authentication.getName()).userid;
+        if(authentication!=null){
+            UUID transmitterid = userRepository.findByUsername(authentication.getName()).userid;
 
-        if(requestMessage!=null){
-            Message msg = new Message();
-            msg.transmitterid = transmitterid;
-            msg.receiverid = requestMessage.receiverid;
-            msg.message = requestMessage.message;
-            messageRepository.save(msg);
-            return ResponseEntity.ok().build();
+            if(requestMessage!=null){
+                Message msg = new Message();
+                msg.transmitterid = transmitterid;
+                msg.receiverid = requestMessage.receiverid;
+                msg.message = requestMessage.message;
+                messageRepository.save(msg);
+                return ResponseEntity.ok().build();
+            }
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("Not found"));
         }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ResponseMessage.message("No autoritzat"));
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseError.message("Not found"));
     }
 
     @GetMapping("/register/web")
