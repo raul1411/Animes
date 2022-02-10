@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -86,11 +87,16 @@ public class UserController {
     @GetMapping("/messages")
     public ResponseEntity<?> getMessages(Authentication authentication){
         UUID userid = userRepository.findByUsername(authentication.getName()).userid;
+
         List<Message> listMsg = messageRepository.findAll().stream()
                 .filter(msg -> msg.receiverid.equals(userid))
                 .collect(Collectors.toList());
+        List<ProjectionMessage> listProjection = new ArrayList<>();
+        for(Message message: listMsg){
+            listProjection.add(messageRepository.findByMessageid(message.messageid));
+        }
 
-        return ResponseEntity.ok().body(new ResponseListMessage(messageRepository.findBy(ProjectionMessage.class),listMsg.size()));
+        return ResponseEntity.ok().body(new ResponseListMessage(listProjection,listMsg.size()));
     }
 
     @PostMapping("/messages")
